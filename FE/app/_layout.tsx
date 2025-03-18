@@ -8,17 +8,20 @@ export default function RootLayout() {
         'outfit-bold': require('../assets/fonts/Outfit-Bold.ttf'),
     });
 
-
     return (
-        
-            <Stack>
-                <Stack.Screen
-                    name="Landing"
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-            </Stack>
-       
+        <Stack>
+            <Stack.Screen
+                name="auth/login"
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="Landing"
+                options={{
+                    headerShown: false,
+                }}
+            />
+        </Stack>
     );
 }

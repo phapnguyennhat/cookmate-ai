@@ -19,6 +19,13 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    origin: '*', // Cho phép tất cả domain (hoặc đặt cụ thể)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true, // Nếu API yêu cầu cookie hoặc xác thực
+  });
+
 
   await app.listen(configService.get('PORT')|| 3000);
 }

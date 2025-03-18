@@ -9,6 +9,8 @@ import { UserModule } from './modules/user/user.module';
 import LogsMiddleware from './util/log.middleware';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { AllExceptionsFilter } from './util/all-exception.filter';
+import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
+import { FileModule } from './modules/file/file.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { AllExceptionsFilter } from './util/all-exception.filter';
       validationSchema: validationSchema,
       isGlobal: true,
     }),
+    CloudinaryModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [

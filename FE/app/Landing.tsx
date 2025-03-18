@@ -1,5 +1,6 @@
-import LoginGoogle from '@/components/LoginGoogle';
 import { Marquee } from '@animatereactnative/marquee';
+import { Link } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import {
     FlatList,
     Image,
@@ -22,6 +23,7 @@ export default function Landing() {
         require('../assets/images/6.jpg'),
         require('../assets/images/4.jpg'),
     ];
+    const router = useRouter()
     return (
         <GestureHandlerRootView className=" flex-1">
             <View className=" ">
@@ -92,7 +94,11 @@ export default function Landing() {
                     😋🤌
                 </Text>
 
-                <LoginGoogle />
+                <TouchableOpacity onPress={()=>router.push('/auth/login')} className=" p-[15px] rounded-[15px] bg-primary mt-[20px]">
+                    <Text className=" text-center  font-outfit text-light text-[17px]  ">
+                        Get Started
+                    </Text>
+                </TouchableOpacity>
             </View>
         </GestureHandlerRootView>
     );

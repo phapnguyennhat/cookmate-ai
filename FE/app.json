@@ -10,14 +10,16 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "googleServicesFile": "./google-services.json"
+      "package": "com.anonymous.cookmateai"
     },
     "web": {
       "bundler": "metro",
@@ -36,9 +38,10 @@
         }
       ],
       [
-        "@react-native-google-signin/google-signin",
+        "expo-secure-store",
         {
-          "iosUrlScheme": "com.googleusercontent.apps._some_id_here_"
+          "configureAndroidBackup": true,
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
         }
       ]
     ],

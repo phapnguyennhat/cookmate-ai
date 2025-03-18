@@ -6,19 +6,8 @@ import { LoginForm, loginSchema } from '@/lib/schema';
 import { login } from '@/lib/action';
 import { getToken, isErrorResponse, saveToken } from '@/lib/util';
 
-import {
-    GoogleSignin,
-    GoogleSigninButton,
-    statusCodes,
-} from '@react-native-google-signin/google-signin';
 
-GoogleSignin.configure({
-    webClientId: process.env.GOOGLE_CLIENT_WEB_ID, 
-    scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-    offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-    forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-    iosClientId: process.env.GOOGLE_CLIENT_IOS_ID
-});
+
 
 export default function Login() {
     const {
@@ -52,6 +41,10 @@ export default function Login() {
             console.log('save token');
         }
     };
+
+    const handleLoginGoogle =  async () =>{
+       
+    }
 
     return (
         <View className=" gap-y-3 flex-1 items-center justify-center">
@@ -95,7 +88,7 @@ export default function Login() {
                 <Text className=" text-white text-center">Login</Text>
             </TouchableOpacity>
 
-            {/* <TouchableOpacity className=" flex-row justify-between py-3 rounded-lg w-[80%] px-3  bg-blue-50 border border-blue-300">
+             <TouchableOpacity onPress={handleLoginGoogle} className=" flex-row justify-between py-3 rounded-lg w-[80%] px-3  bg-blue-50 border border-blue-300">
                 <Text> Login With Google</Text>
                 <Image
                     className=" size-[20px]"
@@ -103,11 +96,8 @@ export default function Login() {
                         uri: 'https://icon2.cleanpng.com/20240216/fty/transparent-google-logo-flat-google-logo-with-blue-green-red-1710875585155.webp',
                     }}
                 />
-            </TouchableOpacity> */}
-            <GoogleSigninButton
-                size={GoogleSigninButton.Size.Wide}
-                color={GoogleSigninButton.Color.Dark}
-            />
+            </TouchableOpacity> 
+            
         </View>
     );
 }

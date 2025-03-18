@@ -43,13 +43,8 @@
           "configureAndroidBackup": true,
           "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
         }
-      ],
-      [
-        "@react-native-google-signin/google-signin",
-        {
-          "iosUrlScheme": "com.googleusercontent.apps.726147945589-hg3unlbl2edemvnjdad8vcj3520m2i1v"
-        }
       ]
+      
     ],
     "experiments": {
       "typedRoutes": true

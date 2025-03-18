@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import './global.css';
 import { useFonts } from 'expo-font';
+import { getToken } from '@/lib/util';
 
 export default function RootLayout() {
     const [loaded, error] = useFonts({

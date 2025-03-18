@@ -2,33 +2,55 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Ionicons } from '@expo/vector-icons';
-
-
-import { z } from 'zod';
 import { LoginForm, loginSchema } from '@/lib/schema';
 import { login } from '@/lib/action';
+import { getToken, isErrorResponse, saveToken } from '@/lib/util';
 
+import {
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes,
+} from '@react-native-google-signin/google-signin';
 
-
-
+GoogleSignin.configure({
+    webClientId: process.env.GOOGLE_CLIENT_WEB_ID, 
+    scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+    offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+    forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+    iosClientId: process.env.GOOGLE_CLIENT_IOS_ID
+});
 
 export default function Login() {
     const {
         register,
         handleSubmit,
         setValue,
+        setError,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(loginSchema),
     });
 
-
-   
-
     const handleLogin = async (data: LoginForm) => {
-      const response =await login(data)
-      console.log(response)
+        const response = await login(data);
+        if (isErrorResponse(response)) {
+            setError('password', {
+                message: 'Account or password is not correct',
+            });
+        } else {
+            const { accessTokenCookie, refreshTokenCookie } = response;
+            await saveToken(
+                accessTokenCookie.token,
+                parseInt(accessTokenCookie.accessTime),
+                'accessToken',
+            );
+            await saveToken(
+                refreshTokenCookie.token,
+                parseInt(refreshTokenCookie.accessTime),
+                'refreshToken',
+            );
+            console.log('save token');
+        }
     };
 
     return (
@@ -45,11 +67,11 @@ export default function Login() {
                     {...register('account')}
                 />
             </View>
-                {errors.account && (
-                    <Text className=" w-[80%] text-left text-red-500">
-                        {errors.account.message}
-                    </Text>
-                )}
+            {errors.account && (
+                <Text className=" w-[80%] text-left text-red-500">
+                    {errors.account.message}
+                </Text>
+            )}
 
             <View className=" w-[80%] rounded-lg border border-gray-300">
                 <TextInput
@@ -60,19 +82,32 @@ export default function Login() {
                     {...register('password')}
                 />
             </View>
-                {errors.password && (
-                    <Text className=" w-[80%] text-left text-red-500">
-                        {errors.password.message}
-                    </Text>
-                )}
+            {errors.password && (
+                <Text className=" w-[80%] text-left text-red-500">
+                    {errors.password.message}
+                </Text>
+            )}
 
-            <TouchableOpacity onPress={handleSubmit(handleLogin)} className=" py-3 rounded-lg bg-black w-[80%]">
+            <TouchableOpacity
+                onPress={handleSubmit(handleLogin)}
+                className=" py-3 rounded-lg bg-black w-[80%]"
+            >
                 <Text className=" text-white text-center">Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity className=' flex-row justify-between py-3 rounded-lg w-[80%] px-3  bg-blue-50 border border-blue-300' >
-             <Text> Login With Google</Text>
-             <Image className=' size-[20px]'  source={{uri: 'https://icon2.cleanpng.com/20240216/fty/transparent-google-logo-flat-google-logo-with-blue-green-red-1710875585155.webp'}}/>
-            </TouchableOpacity>
+
+            {/* <TouchableOpacity className=" flex-row justify-between py-3 rounded-lg w-[80%] px-3  bg-blue-50 border border-blue-300">
+                <Text> Login With Google</Text>
+                <Image
+                    className=" size-[20px]"
+                    source={{
+                        uri: 'https://icon2.cleanpng.com/20240216/fty/transparent-google-logo-flat-google-logo-with-blue-green-red-1710875585155.webp',
+                    }}
+                />
+            </TouchableOpacity> */}
+            <GoogleSigninButton
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark}
+            />
         </View>
     );
 }

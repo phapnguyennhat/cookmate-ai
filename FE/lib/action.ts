@@ -2,7 +2,7 @@ import { LoginForm } from './schema';
 import { fetcher } from './util';
 
 export const login = async (loginData: LoginForm) => {
-    return fetcher('auth/login', {
+    return fetcher<IResponseLogin>('auth/login', {
         method: 'POST',
         credentials: 'include',
         headers: {

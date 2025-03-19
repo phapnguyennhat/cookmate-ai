@@ -1,8 +1,6 @@
 import { Marquee } from '@animatereactnative/marquee';
-import { Link } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import {
-    FlatList,
     Image,
     ScrollView,
     Text,

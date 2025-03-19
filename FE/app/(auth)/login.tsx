@@ -8,6 +8,7 @@ import { getToken, isErrorResponse, saveToken } from '@/lib/util';
 
 
 
+
 export default function Login() {
     const {
         register,
@@ -18,7 +19,6 @@ export default function Login() {
     } = useForm({
         resolver: zodResolver(loginSchema),
     });
-
 
     const handleLogin = async (data: LoginForm) => {
         const response = await login(data);
@@ -42,14 +42,17 @@ export default function Login() {
         }
     };
 
-   
+    const handleLoginGoogle =  async () =>{
+       
+    }
+
     return (
         <View className=" gap-y-3 flex-1 items-center justify-center">
             <Text className="font-outfit-bold text-lg ">
                 Login To Cookmate AI
             </Text>
 
-            <View className=" w-[80%] py-2 rounded-lg border border-gray-300 ">
+            <View className=" w-[80%] rounded-lg border border-gray-300 ">
                 <TextInput
                     className="px-3"
                     placeholder="Email or Username"
@@ -63,7 +66,7 @@ export default function Login() {
                 </Text>
             )}
 
-            <View className=" w-[80%] py-2 rounded-lg border border-gray-300">
+            <View className=" w-[80%] rounded-lg border border-gray-300">
                 <TextInput
                     className=" px-3"
                     placeholder="Password"
@@ -85,7 +88,7 @@ export default function Login() {
                 <Text className=" text-white text-center">Login</Text>
             </TouchableOpacity>
 
-             <TouchableOpacity  className=" flex-row justify-between py-3 rounded-lg w-[80%] px-3  bg-blue-50 border border-blue-300">
+             <TouchableOpacity onPress={handleLoginGoogle} className=" flex-row justify-between py-3 rounded-lg w-[80%] px-3  bg-blue-50 border border-blue-300">
                 <Text> Login With Google</Text>
                 <Image
                     className=" size-[20px]"

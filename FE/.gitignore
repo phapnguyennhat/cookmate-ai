@@ -9,7 +9,6 @@ dist/
 web-build/
 expo-env.d.ts
 
-
 android
 ios
 
@@ -35,7 +34,6 @@ yarn-error.*
 
 # local env files
 .env*.local
-.env
 
 # typescript
 *.tsbuildinfo

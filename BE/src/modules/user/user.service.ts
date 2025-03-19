@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/database/entity/user.entity';
+import { AuthBy, User } from 'src/database/entity/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt'
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
+import { TokenPayload } from 'google-auth-library';
 
 
 @Injectable()
@@ -29,6 +30,14 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto){
     return this.userRepo.save(createUserDto)
+  }
+
+  async createWithGoogle(userData: TokenPayload){
+    return this.userRepo.save({
+      email: userData.email,
+      name: userData.name,
+      authBy: AuthBy.GOOGLE
+    })
   }
 
   async removeRefreshToken(userId: string) {

@@ -15,6 +15,8 @@ export const validationSchema = Joi.object({
 
   CLOUDINARY_CLOUD_NAME: Joi.string().required(),
   CLOUDINARY_API_KEY: Joi.string().required(),
-  CLOUDINARY_API_SECRET: Joi.string().required()
+  CLOUDINARY_API_SECRET: Joi.string().required(),
 
+  GOOGLE_AUTH_CLIENT_ID: Joi.string().required(),
+  GOOGLE_AUTH_CLIENT_SECRET: Joi.string().required()
 })

@@ -3,10 +3,17 @@ import { BaseEntity } from "src/common/baseEntity";
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { File } from "./file.entity";
 
+export enum AuthBy {
+  GOOGLE='GOOGLE',
+  GITHUB='GITHUB',
+  FACEBOOK='FACEBOOK',
+  LOCAL='LOCAL'
+}
+
 @Entity()
 export   class User extends BaseEntity {
 
-  @Column({unique: true})
+  @Column({unique: true, nullable: true})
   username: string
 
   @Column({unique: true})
@@ -15,14 +22,16 @@ export   class User extends BaseEntity {
   @Column()
   name: string
 
-  @Column({type: 'integer'})
+  @Column({type: 'integer', nullable: true})
   credit: number
 
-  @Column({type: 'text'})
+  @Column({type: 'text', nullable: true})
   pref: string
 
+  @Column( {enum:AuthBy, type: 'enum', default: AuthBy.LOCAL})
+  authBy: AuthBy
 
-  @Column()
+  @Column({nullable: true})
   @Exclude()
   password: string
 

@@ -5,9 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginForm, loginSchema } from '@/lib/schema';
 import { login } from '@/lib/action';
 import { getToken, isErrorResponse, saveToken } from '@/lib/util';
-
-
-
+import {
+    GoogleSignin,
+    isErrorWithCode,
+    isSuccessResponse,
+    statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 export default function Login() {
     const {
@@ -24,27 +27,22 @@ export default function Login() {
         const response = await login(data);
         if (isErrorResponse(response)) {
             setError('password', {
-                message: 'Account or password is not correct',
+                message: response.message,
             });
-        } else {
-            const { accessTokenCookie, refreshTokenCookie } = response;
-            await saveToken(
-                accessTokenCookie.token,
-                parseInt(accessTokenCookie.accessTime),
-                'accessToken',
-            );
-            await saveToken(
-                refreshTokenCookie.token,
-                parseInt(refreshTokenCookie.accessTime),
-                'refreshToken',
-            );
-            console.log('save token');
         }
     };
 
-    const handleLoginGoogle =  async () =>{
-       
-    }
+    const handleLoginGoogle = async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+            const response = await GoogleSignin.signIn();
+            if (isSuccessResponse(response)) {
+                const { idToken } = response.data;
+            }
+        } catch (error) {
+            console.log({ error });
+        }
+    };
 
     return (
         <View className=" gap-y-3 flex-1 items-center justify-center">
@@ -88,7 +86,10 @@ export default function Login() {
                 <Text className=" text-white text-center">Login</Text>
             </TouchableOpacity>
 
-             <TouchableOpacity onPress={handleLoginGoogle} className=" flex-row justify-between py-3 rounded-lg w-[80%] px-3  bg-blue-50 border border-blue-300">
+            <TouchableOpacity
+                onPress={handleLoginGoogle}
+                className=" flex-row justify-between py-3 rounded-lg w-[80%] px-3  bg-blue-50 border border-blue-300"
+            >
                 <Text> Login With Google</Text>
                 <Image
                     className=" size-[20px]"
@@ -96,8 +97,7 @@ export default function Login() {
                         uri: 'https://icon2.cleanpng.com/20240216/fty/transparent-google-logo-flat-google-logo-with-blue-green-red-1710875585155.webp',
                     }}
                 />
-            </TouchableOpacity> 
-            
+            </TouchableOpacity>
         </View>
     );
 }

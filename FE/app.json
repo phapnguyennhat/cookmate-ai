@@ -12,7 +12,8 @@
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "com.anonymous.cookmateai"
     },
     "android": {
       "adaptiveIcon": {
@@ -43,8 +44,13 @@
           "configureAndroidBackup": true,
           "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
         }
+      ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.726147945589-hg3unlbl2edemvnjdad8vcj3520m2i1v"
+        }
       ]
-      
     ],
     "experiments": {
       "typedRoutes": true
@@ -52,10 +58,8 @@
     "extra": {
       "router": {
         "origin": false
-      },
-      "eas": {
-        "projectId": "813c0a63-50cf-4d6b-b774-79bfe03f5fe9"
       }
-    }
+    },
+    "owner": "nguyenphap242"
   }
 }

@@ -12,7 +12,7 @@ export default function Home() {
       }}
     >
       {/* <Redirect href={'/Landing'}/> */}
-      <Link href={'/Landing'}>To Landing</Link>
+      <Link href={'/landing'}>To Landing</Link>
     </View>
   );
 }

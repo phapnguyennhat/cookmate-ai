@@ -92,7 +92,7 @@ export default function Landing() {
                     😋🤌
                 </Text>
 
-                <TouchableOpacity onPress={()=>router.push('/auth/login')} className=" p-[15px] rounded-[15px] bg-primary mt-[20px]">
+                <TouchableOpacity onPress={()=>router.push('/login')} className=" p-[15px] rounded-[15px] bg-primary mt-[20px]">
                     <Text className=" text-center  font-outfit text-light text-[17px]  ">
                         Get Started
                     </Text>

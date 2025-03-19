@@ -48,11 +48,11 @@ export default function Login() {
 
     return (
         <View className=" gap-y-3 flex-1 items-center justify-center">
-            <Text className="font-outfit-bold text-lg ">
+            <Text className=" font-outfit-bold text-lg ">
                 Login To Cookmate AI
             </Text>
 
-            <View className=" w-[80%] rounded-lg border border-gray-300 ">
+            <View className=" w-[80%] py-2 rounded-lg border border-gray-300 ">
                 <TextInput
                     className="px-3"
                     placeholder="Email or Username"
@@ -66,7 +66,7 @@ export default function Login() {
                 </Text>
             )}
 
-            <View className=" w-[80%] rounded-lg border border-gray-300">
+            <View className=" w-[80%] py-2 rounded-lg border border-gray-300">
                 <TextInput
                     className=" px-3"
                     placeholder="Password"

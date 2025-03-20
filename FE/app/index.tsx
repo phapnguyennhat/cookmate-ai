@@ -1,34 +1,45 @@
-import { getProfile } from "@/lib/api";
-import { getToken, removeToken } from "@/lib/util";
-import { useQuery } from "@tanstack/react-query";
-import { Link, Redirect } from "expo-router";
-import { useEffect } from "react";
-import CookieManager from '@react-native-cookies/cookies';
+import FullScreenLoader from '@/components/FullScreenLoader';
+import { useLogout } from '@/hook/hookAction';
+import ProtectedRoute from '@/routes/ProtectedRoute';
+import { Link, useRouter } from 'expo-router';
 
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Toast } from 'toastify-react-native';
 
 export default function Home() {
+    const router = useRouter();
+    const logout = useLogout();
 
-  useEffect(()=>{
-    const foo = async()=>{
-      const cookie = await CookieManager.get('http://localhost:8080')
-      console.log({cookie})
-    }
-    foo()
-    getProfile()
-      
-  },[])
+    const handleLogout = () => {
+        logout.mutate(undefined, {
+            onSuccess: () => {
+                router.replace('/landing');
+            },
+            onError: (error: any) => {
+                router.replace('/landing')
+            },
+        });
+    };
+
   
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {/* <Redirect href={'/Landing'}/> */}
-      <Link href={'/landing'}>To Landing</Link>
-    </View>
-  );
+
+    return (
+        <ProtectedRoute>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                {/* <Redirect href={'/Landing'}/> */}
+                <Link href={'/landing'}>To Landing</Link>
+
+                <TouchableOpacity onPress={handleLogout}>
+                    <Text>Logout</Text>
+                </TouchableOpacity>
+                <FullScreenLoader visible={logout.isPending} />
+            </View>
+        </ProtectedRoute>
+    );
 }

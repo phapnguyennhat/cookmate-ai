@@ -1,31 +1,18 @@
-import * as SecureStore from 'expo-secure-store';
-
-
-
-
-export const saveToken = async (token: string, expiresIn: number, typeToken: 'accessToken'| 'refreshToken') =>{
-  const expiryTime = Date.now() + expiresIn * 1000;
-  const tokenData = JSON.stringify({ token, expiryTime });
-  await SecureStore.setItemAsync(typeToken, tokenData);
-}
-
-export const getToken = async (typeToken: 'accessToken'| 'refreshToken') =>{
-  const tokenData = await SecureStore.getItemAsync(typeToken);
-  if(!tokenData){
-    return null
-  }
-  const {token, expiryTime } = JSON.parse(tokenData)
-  if (Date.now() > expiryTime) {
-    await SecureStore.deleteItemAsync('authToken'); // Xóa token nếu hết hạn
-    return null;
-  }
-  return token
-}
-
-export const removeToken = async (typeToken: 'accessToken'| 'refreshToken') =>{
-  await SecureStore.deleteItemAsync(typeToken)
-}
+import CookieManager from "@react-native-cookies/cookies";
+import { refreshCookie } from "./action";
 
 export function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export const isLogin =  async ()=>{
+  const cookies = await CookieManager.get(process.env.EXPO_PUBLIC_BACKEND_URL!)
+  const accessToken = cookies.Authentication?.value
+  const refreshToken = cookies.Refresh?.value
+
+  if(!accessToken && refreshToken){
+    await refreshCookie()
+  }
+  
+  return !!refreshToken
 }

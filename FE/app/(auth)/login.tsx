@@ -3,14 +3,15 @@ import { useForm } from 'react-hook-form';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginForm, loginSchema } from '@/lib/schema';
-import { login } from '@/lib/action';
-import { getToken, isErrorResponse, saveToken } from '@/lib/util';
 import {
     GoogleSignin,
     isErrorWithCode,
     isSuccessResponse,
     statusCodes,
 } from '@react-native-google-signin/google-signin';
+import { useLogin, useLoginGoogle } from '@/hook/hookAction';
+import { Toast } from 'toastify-react-native';
+import FullScreenLoader from '@/components/FullScreenLoader';
 
 export default function Login() {
     const {
@@ -23,24 +24,42 @@ export default function Login() {
         resolver: zodResolver(loginSchema),
     });
 
+    
+
+    const login = useLogin()
+    const loginGoogle = useLoginGoogle()
+
+
     const handleLogin = async (data: LoginForm) => {
-        const response = await login(data);
-        if (isErrorResponse(response)) {
-            setError('password', {
-                message: response.message,
-            });
-        }
+        login.mutate(data, {
+            onError: (error: any) => {
+                if(error.status ===401){
+                    setError('password', { message: error.response.data.message });
+                }else{
+                    Toast.error(error.response.data.message)
+                }
+            },
+        });
     };
 
     const handleLoginGoogle = async () => {
         try {
-            await GoogleSignin.hasPlayServices();
-            const response = await GoogleSignin.signIn();
-            if (isSuccessResponse(response)) {
-                const { idToken } = response.data;
+            await GoogleSignin.hasPlayServices()
+            const response = await GoogleSignin.signIn()
+            if (isSuccessResponse(response)){
+                const {idToken}= response.data
+                
+                if(!idToken){
+                    throw new Error()
+                }
+                loginGoogle.mutate(idToken, {
+                    onError: (error: any)=>{
+                        Toast.error(error.response.data.message)
+                    }
+                })
             }
         } catch (error) {
-            console.log({ error });
+            Toast.error('Sign in with Google failed')
         }
     };
 
@@ -80,8 +99,9 @@ export default function Login() {
             )}
 
             <TouchableOpacity
+                disabled={login.isPending}
                 onPress={handleSubmit(handleLogin)}
-                className=" py-3 rounded-lg bg-black w-[80%]"
+                className={` py-3 rounded-lg ${login.isPending? 'bg-gray-700': 'bg-black'} w-[80%]`}
             >
                 <Text className=" text-white text-center">Login</Text>
             </TouchableOpacity>
@@ -98,6 +118,7 @@ export default function Login() {
                     }}
                 />
             </TouchableOpacity>
+            <FullScreenLoader visible={login.isPending}/>
         </View>
     );
 }

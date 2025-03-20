@@ -1,25 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 
 
-export async function fetcher<T> (input: string, init?: RequestInit) {
-  try {
-    console.log(process.env.EXPO_PUBLIC_BACKEND_URL)
-    const response = await fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/${input}`, init)
-    const data = await response.json()
-    return data as T | IError
 
-  } catch (error) {
-    console.log({error})
-    return {
-      statusCode: 500,
-      message: 'Server Error'
-    } as IError
-  }
-}
-
-export const isErrorResponse = (res: any): res is IError => {
-  return (res as IError).statusCode !== undefined;
-};
 
 export const saveToken = async (token: string, expiresIn: number, typeToken: 'accessToken'| 'refreshToken') =>{
   const expiryTime = Date.now() + expiresIn * 1000;
@@ -40,6 +22,10 @@ export const getToken = async (typeToken: 'accessToken'| 'refreshToken') =>{
   return token
 }
 
-const removeToken = async (typeToken: 'accessToken'| 'refreshToken') =>{
+export const removeToken = async (typeToken: 'accessToken'| 'refreshToken') =>{
   await SecureStore.deleteItemAsync(typeToken)
+}
+
+export function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

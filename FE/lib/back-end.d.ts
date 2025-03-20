@@ -17,4 +17,10 @@ declare global {
     statusCode: number
     message: string
   }
+
+  interface IUser {
+    name: string,
+    credit: number
+    pref: string
+  }
 }

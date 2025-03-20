@@ -1,34 +1,17 @@
 import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
 import { LoginForm } from './schema';
-import { fetcher, isErrorResponse, saveToken } from './util';
+import {  delay, saveToken } from './util';
+import { myApi } from '@/config/myApi';
 
 export const login = async (loginData: LoginForm) => {
-    const response = await fetcher<IResponseLogin>('auth/login', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
-    });
-    if (isErrorResponse(response)) {
-        return response;
-    } else {
-       saveTokenLogin(response)
-    }
+    const response = await myApi.post<IResponseLogin>('auth/login', loginData);
+    saveTokenLogin(response.data);
 };
 
 
-export const loginGoogle = async () => {
-    try {
-        await GoogleSignin.hasPlayServices()
-        const response = await GoogleSignin.signIn()
-        if(isSuccessResponse(response)){
-            const {idToken} = response.data
-        }
-    } catch (error) {
-        
-    }
+export const loginGoogle = async (idToken :string) => {
+   const response = await myApi.post<IResponseLogin>('google-auth', {idToken})
+   saveTokenLogin(response.data)
 };
 
 const saveTokenLogin = async({accessTokenCookie, refreshTokenCookie}: IResponseLogin) =>{
@@ -42,5 +25,5 @@ const saveTokenLogin = async({accessTokenCookie, refreshTokenCookie}: IResponseL
         parseInt(refreshTokenCookie.accessTime),
         'refreshToken',
     );
-    console.log('save token');
+   
 }

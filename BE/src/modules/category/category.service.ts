@@ -16,4 +16,8 @@ export class CategoryService {
     }
     return this.categoryRepo.save(createCategory)
   }
+
+  async getCategoryList (){
+    return this.categoryRepo.find()
+  }
 }

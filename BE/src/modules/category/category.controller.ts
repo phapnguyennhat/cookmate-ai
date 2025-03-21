@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, ParseFilePipeBuilder, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, ParseFilePipeBuilder, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateCategoryDto } from './dto/createCategory.dto';
@@ -56,8 +56,10 @@ export class CategoryController {
     }finally{
       await queryRunner.release()
     }
+  }
 
-
-   
+  @Get()
+  async getCategoryList () {
+    return this.categoryService.getCategoryList()
   }
 }

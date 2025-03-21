@@ -36,9 +36,9 @@ export   class User extends BaseEntity {
   password: string
 
 
-  @Column({ nullable: true })
-  @Exclude()
-  currentHashedRefreshToken: string;
+  // @Column({ nullable: true })
+  // @Exclude()
+  // currentHashedRefreshToken: string;
 
   @Column({nullable: true})
   avatarId: string

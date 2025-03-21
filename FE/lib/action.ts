@@ -1,7 +1,8 @@
 import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
 import { LoginForm } from './schema';
-import {  delay } from './util';
 import { myApi } from '@/config/myApi';
+import CookieManager from "@react-native-cookies/cookies";
+
 
 export const login = async (loginData: LoginForm) => {
     const response = await myApi.post<IResponseLogin>('auth/login', loginData);
@@ -15,8 +16,6 @@ export const loginGoogle = async (idToken :string) => {
 };
 
 export const refreshCookie = async () =>{
-    const response = await myApi.post<IResponseLogin>('auth/refresh')
-    return response.data
 }
 
 

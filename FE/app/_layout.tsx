@@ -4,7 +4,8 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ToastManager from 'toastify-react-native';
 import { StyleSheet, Text, View } from 'react-native';
-
+import StoreProvider from '@/provider/StoreProvider';
+import { STALETIME } from '@/common/constant';
 
 GoogleSignin.configure({
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
@@ -15,42 +16,48 @@ GoogleSignin.configure({
     profileImageSize: 150,
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({defaultOptions: {
+    queries: {retry: false, staleTime: STALETIME},
+    mutations: {retry: false}
+}});
 
 export default function RootLayout() {
     return (
-            <QueryClientProvider client={queryClient}>
-                <ToastManager
-                    style={styles.toast}
-                    textStyle={{
-                        fontSize: 16,
-                    }}
-                    position="top"
-                    animationIn={'slideInDown'}
-                    animationOut={'slideOutUp'}
-                    showProgressBar={false}
-                />
-
+        <QueryClientProvider client={queryClient}>
+            <ToastManager
+                style={styles.toast}
+                textStyle={{
+                    fontSize: 16,
+                }}
+                position="top"
+                animationIn={'slideInDown'}
+                animationOut={'slideOutUp'}
+                showProgressBar={false}
+            />
+            <StoreProvider>
                 <Stack>
                     <Stack.Screen
                         name="landing"
                         options={{
                             headerShown: false,
                         }}
-                    />
+                        />
 
                     <Stack.Screen
                         name="(auth)/login"
                         options={{
                             headerShown: false,
                         }}
+                        />
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{
+                            headerShown: false,
+                        }}
                     />
-                    <Stack.Screen name='index' options={{
-                        headerShown: false
-                    }} />
                 </Stack>
-            </QueryClientProvider>
-            
+            </StoreProvider>
+        </QueryClientProvider>
     );
 }
 

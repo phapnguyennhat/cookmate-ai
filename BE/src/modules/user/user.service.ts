@@ -40,25 +40,9 @@ export class UserService {
     })
   }
 
-  async removeRefreshToken(userId: string) {
-    return this.userRepo.update(userId, {
-      currentHashedRefreshToken: null,
-    });
-  }
 
 
-  async getUserIfRefreshTokenMatches(refreshToken: string, userId: string) {
-    const user: User = await this.findById(userId);
 
-    const isRefreshTokenMatching = await bcrypt.compare(
-      refreshToken,
-      user.currentHashedRefreshToken,
-    );
-
-    if (isRefreshTokenMatching) {
-      return user;
-    }
-  }
 
 
 }

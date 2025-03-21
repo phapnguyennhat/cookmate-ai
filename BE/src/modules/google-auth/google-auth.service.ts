@@ -41,7 +41,6 @@ export class GoogleAuthService {
   async getCookiesForUser (user:User){
     const accessTokenCookie = await this.authService.getCookieWithJwtAccessToken(user.id)
     const refreshTokenCookie = await this.authService.getCookieWithJwtRefreshToken(user.id)
-    await this.authService.setCurrentRefreshToken(refreshTokenCookie.token, user.id)
     return {accessTokenCookie, refreshTokenCookie}
   }
 

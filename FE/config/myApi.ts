@@ -1,3 +1,4 @@
+import CookieManager from '@react-native-cookies/cookies';
 import axios from 'axios';
 export const myApi = axios.create({
     baseURL: process.env.EXPO_PUBLIC_BACKEND_URL,
@@ -8,3 +9,17 @@ export const myApi = axios.create({
 });
 
 
+myApi.interceptors.request.use(async function (config) {
+    // Do something before request is sent
+    const cookies = await CookieManager.get(process.env.EXPO_PUBLIC_BACKEND_URL!)
+    const accessToken = cookies.Authentication?.value
+    const refreshToken = cookies.Refresh?.value
+    if(!accessToken && refreshToken){
+        await axios.post('auth/refresh')
+    }
+
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  });

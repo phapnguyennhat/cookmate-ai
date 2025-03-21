@@ -1,4 +1,4 @@
-import AuthRoute from '@/routes/AuthRoute';
+import AuthRoute from '@/provider/AuthRoute';
 import { Marquee } from '@animatereactnative/marquee';
 import { useRouter } from 'expo-router';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';

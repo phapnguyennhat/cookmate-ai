@@ -1,0 +1,1 @@
+export const STALETIME = 5*60*1000

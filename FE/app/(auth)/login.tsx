@@ -12,8 +12,8 @@ import {
 import { useLogin, useLoginGoogle } from '@/hook/hookAction';
 import { Toast } from 'toastify-react-native';
 import FullScreenLoader from '@/components/FullScreenLoader';
-import { useRouter } from 'expo-router';
-import AuthRoute from '@/routes/AuthRoute';
+import {  useRouter } from 'expo-router';
+import AuthRoute from '@/provider/AuthRoute';
 
 export default function Login() {
     const {
@@ -30,6 +30,8 @@ export default function Login() {
     const loginGoogle = useLoginGoogle();
     const router = useRouter();
 
+
+
     const handleLogin = async (data: LoginForm) => {
         login.mutate(data, {
             onError: (error: any) => {
@@ -42,6 +44,7 @@ export default function Login() {
                 }
             },
             onSuccess: () => {
+               router.dismissAll()
                 router.replace('/');
             },
         });
@@ -71,7 +74,6 @@ export default function Login() {
         }
     };
     return (
-        <AuthRoute>
             <View className=" gap-y-3 flex-1 items-center justify-center">
                 <Text className=" font-outfit-bold text-lg ">
                     Login To Cookmate AI
@@ -128,8 +130,9 @@ export default function Login() {
                         }}
                     />
                 </TouchableOpacity>
-                <FullScreenLoader visible={login.isPending || loginGoogle.isPending} />
+                <FullScreenLoader
+                    visible={login.isPending || loginGoogle.isPending}
+                />
             </View>
-        </AuthRoute>
     );
 }

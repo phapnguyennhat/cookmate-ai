@@ -37,7 +37,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: RequestWithUser) {
-    await this.userService.removeRefreshToken(req.user.id);
+    
     req.res.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
     return { message: 'Đăng xuất thành công' };
   }
@@ -50,10 +50,7 @@ export class AuthController {
       await this.authService.getCookieWithJwtAccessToken(req.user?.id);
     const refreshTokenCookie =
       await this.authService.getCookieWithJwtRefreshToken(req.user?.id);
-    await this.authService.setCurrentRefreshToken(
-      refreshTokenCookie.token,
-      req.user?.id,
-    );
+    
 
     req.res.setHeader('Set-Cookie', [
       accessTokenCookie.cookie,

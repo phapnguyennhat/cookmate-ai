@@ -43,7 +43,7 @@ export   class User extends BaseEntity {
   @Column({nullable: true})
   avatarId: string
 
-  @OneToOne(()=>File)
+  @OneToOne(()=>File, {eager: true})
   @JoinColumn()
   avatar: File
   

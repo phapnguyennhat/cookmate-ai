@@ -12,6 +12,7 @@ import { AllExceptionsFilter } from './util/all-exception.filter';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { FileModule } from './modules/file/file.module';
 import { GoogleAuthModule } from './modules/google-auth/google-auth.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { GoogleAuthModule } from './modules/google-auth/google-auth.module';
     CloudinaryModule,
     FileModule,
     GoogleAuthModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [

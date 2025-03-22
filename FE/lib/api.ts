@@ -7,16 +7,8 @@ export const getProfile = async ()=>{
 }
 
 export const getRecipeOptions = async (prompt: string)=>{
-  const response = await myApi.post(`openai/recipe-option`, {prompt})
+  const response = await myApi.post<RecipeOption[]>(`recipe/option`, {prompt})
   return response.data
 }
 
-export const completeRecipe = async (recipeOption: RecipeOption)=>{
-  const response = await myApi.post(`openai/complete-recipe`,recipeOption)
-  return response.data
-}
 
-export const generateAiImage = async (prompt: string) => {
-    const response = await myApi.post('guruai', {prompt})
-    return response.data
-};

@@ -39,4 +39,22 @@ declare global {
     description: string
     ingredients: string[]
   }
+
+  interface IRecipe {
+    recipeName: string
+    description: string
+    ingredients: Ingredient[]
+    steps: string[]
+    calories: number
+    cookTime: number
+    serveTo: number
+    imagePrompt: string
+    recipeImage:string
+  }
+
+  interface Ingredient {
+    ingredient: string,
+    icon: string,
+    quantity: string
+  }
 }

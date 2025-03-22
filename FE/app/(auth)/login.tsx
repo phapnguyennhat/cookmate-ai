@@ -14,6 +14,7 @@ import { Toast } from 'toastify-react-native';
 import FullScreenLoader from '@/components/FullScreenLoader';
 import {  useRouter } from 'expo-router';
 import AuthRoute from '@/provider/AuthRoute';
+import { getRefreshToken } from '@/lib/util';
 
 export default function Login() {
     const {
@@ -29,8 +30,6 @@ export default function Login() {
     const login = useLogin();
     const loginGoogle = useLoginGoogle();
     const router = useRouter();
-
-
 
     const handleLogin = async (data: LoginForm) => {
         login.mutate(data, {

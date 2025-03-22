@@ -15,6 +15,7 @@ import { GoogleAuthModule } from './modules/google-auth/google-auth.module';
 import { CategoryModule } from './modules/category/category.module';
 import { OpenaiModule } from './modules/openai/openai.module';
 import { GuruaiModule } from './modules/guruai/guruai.module';
+import { RecipeModule } from './modules/recipe/recipe.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { GuruaiModule } from './modules/guruai/guruai.module';
     CategoryModule,
     OpenaiModule,
     GuruaiModule,
+    RecipeModule,
   ],
   controllers: [AppController],
   providers: [

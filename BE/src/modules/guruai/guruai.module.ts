@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { GuruaiService } from './guruai.service';
-import { GuruaiController } from './guruai.controller';
 
 @Module({
-  controllers: [GuruaiController],
+  controllers: [],
   providers: [GuruaiService],
+  exports: [GuruaiService],
 })
 export class GuruaiModule {}

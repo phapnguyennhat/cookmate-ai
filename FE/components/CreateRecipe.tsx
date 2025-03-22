@@ -9,18 +9,18 @@ import {
 } from 'react-native';
 import Button from './Button';
 import { myApi } from '@/config/myApi';
-import { completeRecipe, getRecipeOptions } from '@/lib/api';
+import {  getRecipeOptions } from '@/lib/api';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import FullScreenLoader from './FullScreenLoader';
 import { Toast } from 'toastify-react-native';
-import { any } from 'zod';
+import { useCreateRecipe } from '@/hook/hookAction';
 
 export default function CreateRecipe() {
     const [userInput, setUserInput] = useState('');
     const [recipeOptions, setRecipeOptions] = useState<RecipeOption[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const actionSheetRef = useRef<ActionSheetRef>(null);
-    const [openLoading, setOpenLoading] = useState(false);
+    const mutation = useCreateRecipe();
 
     const generateRecipeOption = async () => {
         if (!userInput) {
@@ -42,18 +42,13 @@ export default function CreateRecipe() {
     const generateCompleteRecipe = async (recipeOption: RecipeOption) => {
         actionSheetRef.current?.hide();
 
-        setOpenLoading(true);
 
         try {
-            const result = await completeRecipe(recipeOption);
-            console.log(result)
+            mutation.mutate(recipeOption)
             
-
-            setOpenLoading(false);
         } catch (error) {
             console.log(error);
             Toast.error('Response too slow');
-            setOpenLoading(false);
         }
 
     };
@@ -86,7 +81,7 @@ export default function CreateRecipe() {
                 loading={isLoading}
             />
 
-            <FullScreenLoader visible={openLoading} />
+            <FullScreenLoader visible={ mutation.isPending} />
 
             <ActionSheet ref={actionSheetRef}>
                 <View className=" p-[25px] ">

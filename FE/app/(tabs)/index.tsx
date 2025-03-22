@@ -1,30 +1,30 @@
+import CategoryList from '@/components/CategoryList';
+import CreateRecipe from '@/components/CreateRecipe';
 import FullScreenLoader from '@/components/FullScreenLoader';
+import IntroHeader from '@/components/IntroHeader';
 import { useLogout } from '@/hook/hookAction';
 import { useGetProfile } from '@/hook/hookApi';
 import { Link } from 'expo-router';
 
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 export default function Home() {
     const logout = useLogout();
 
-    const {profile, isLoading} = useGetProfile()
+  
     
     return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
+            <ScrollView
+               className='flex-1 bg-white p-[20px]'
             >
-                {/* <Redirect href={'/Landing'}/> */}
-                <Link href={'/landing'}>To Landing</Link>
+                {/* Intro */}
+                <IntroHeader/>
+                {/* Recipe Generator UI */}
+                <CreateRecipe/>
+                {/* Category */}
+                <CategoryList/>
 
-                <TouchableOpacity onPress={()=>logout.mutate()}>
-                    <Text>Logout</Text>
-                </TouchableOpacity>
-                <FullScreenLoader visible={logout.isPending|| isLoading} />
-            </View>
+                <FullScreenLoader visible={logout.isPending} />
+            </ScrollView>
     );
 }

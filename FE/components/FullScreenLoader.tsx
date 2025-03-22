@@ -1,9 +1,14 @@
 import React from 'react';
-import { View, ActivityIndicator, Modal } from 'react-native';
+import { View, ActivityIndicator, Modal, Text } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-const FullScreenLoader = ({visible}: {visible: boolean}) => {
-  
+const FullScreenLoader = ({
+    visible,
+    text = 'Loading...',
+}: {
+    visible: boolean;
+    text?: string;
+}) => {
     return (
         <Modal transparent animationType="fade" visible={visible}>
             <View
@@ -14,7 +19,12 @@ const FullScreenLoader = ({visible}: {visible: boolean}) => {
                     alignItems: 'center',
                 }}
             >
-                <ActivityIndicator color={'#299446'} size={'large'} />
+                <View className=' p-[20px] rounded-[15px] bg-primary items-center' >
+                    <ActivityIndicator color={'#fff'} size={'large'} />
+                    <Text className=" mt-[10px] text-light text-base font-outfit">
+                        {text}
+                    </Text>
+                </View>
             </View>
         </Modal>
     );

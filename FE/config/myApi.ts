@@ -15,7 +15,7 @@ myApi.interceptors.request.use(async function (config) {
     const accessToken = cookies.Authentication?.value
     const refreshToken = cookies.Refresh?.value
     if(!accessToken && refreshToken){
-        await axios.post('auth/refresh')
+        await axios.post('auth/refresh',undefined, {baseURL: process.env.EXPO_PUBLIC_BACKEND_URL})
     }
 
     return config;

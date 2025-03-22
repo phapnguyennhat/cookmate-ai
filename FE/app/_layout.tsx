@@ -6,6 +6,7 @@ import ToastManager from 'toastify-react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import StoreProvider from '@/provider/StoreProvider';
 import { STALETIME } from '@/common/constant';
+import { useFonts } from 'expo-font';
 
 GoogleSignin.configure({
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
@@ -22,6 +23,10 @@ const queryClient = new QueryClient({defaultOptions: {
 }});
 
 export default function RootLayout() {
+    const [loaded, error] = useFonts({
+        'outfit': require('../assets/fonts/Outfit-Regular.ttf'),
+        'outfit-bold': require('../assets/fonts/Outfit-Bold.ttf')
+      });
     return (
         <QueryClientProvider client={queryClient}>
             <ToastManager

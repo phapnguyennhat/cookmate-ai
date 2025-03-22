@@ -15,3 +15,12 @@ export const isLogin =  async ()=>{
   }
   return !!refreshToken
 }
+
+
+export const getRefreshToken = async ()=>{
+  const cookies = await CookieManager.get(process.env.EXPO_PUBLIC_BACKEND_URL!)
+  const refreshToken = cookies.Refresh?.value
+  console.log({refreshToken})
+}
+
+

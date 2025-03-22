@@ -1,6 +1,9 @@
+import { getRefreshToken } from '@/lib/util';
 import AuthRoute from '@/provider/AuthRoute';
 import { Marquee } from '@animatereactnative/marquee';
+import CookieManager from '@react-native-cookies/cookies';
 import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -17,6 +20,9 @@ export default function Landing() {
         require('../assets/images/4.jpg'),
     ];
     const router = useRouter();
+
+    
+    
     return (
         <AuthRoute>
             <GestureHandlerRootView className=" flex-1">

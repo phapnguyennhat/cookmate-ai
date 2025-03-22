@@ -11,4 +11,11 @@ export const getRecipeOptions = async (prompt: string)=>{
   return response.data
 }
 
+export const findRecipe =async (queryRecipe: QueryRecipe)=>{
+  const query = new URLSearchParams(queryRecipe as any)
+  const reponse = await myApi.get<{recipes: IRecipe[], count:number}>(`recipe?${query.toString}`)
+  return reponse.data
+}
+
+
 

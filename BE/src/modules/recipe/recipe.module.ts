@@ -5,9 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Recipe } from 'src/database/entity/recipe.entity';
 import { GuruaiModule } from '../guruai/guruai.module';
 import { OpenaiModule } from '../openai/openai.module';
+import { CategoryModule } from '../category/category.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Recipe]), GuruaiModule, OpenaiModule],
+  imports: [TypeOrmModule.forFeature([Recipe]), GuruaiModule, OpenaiModule, CategoryModule, UserModule],
   controllers: [RecipeController],
   providers: [RecipeService],
 })

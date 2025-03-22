@@ -49,12 +49,18 @@ declare global {
     cookTime: number
     serveTo: number
     imagePrompt: string
-    recipeImage:string
+    recipeImageUrl:string
   }
 
   interface Ingredient {
     ingredient: string,
     icon: string,
     quantity: string
+  }
+
+  interface QueryRecipe {
+    page?: number, 
+    limit?: number
+    categoryName ?:string
   }
 }

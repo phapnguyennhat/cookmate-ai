@@ -1,6 +1,7 @@
 import { Type } from "class-transformer";
 import { ArrayMinSize, IsArray, IsNotEmpty, IsNumber, IsString, ValidateNested } from "class-validator";
 import { CreateIngredientDto } from "./CreateIngredient.dto";
+import { Category } from "src/database/entity/category.entity";
 
 export class CreateRecipeDto {
   @IsNotEmpty()
@@ -49,4 +50,5 @@ export class CreateRecipeDto {
 export class CreateRecipe extends CreateRecipeDto {
   userId: string
   recipeImageUrl: string
+  categories: Category[]
 }

@@ -60,6 +60,10 @@ export default function RootLayout() {
                             headerShown: false,
                         }}
                     />
+                    <Stack.Screen name='recipe-by-category' options={{
+                        headerTransparent: true,
+                        headerTitle: ''
+                    }} />
                 </Stack>
             </StoreProvider>
         </QueryClientProvider>

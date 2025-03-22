@@ -1,8 +1,9 @@
 import { IsString } from "class-validator";
 import { BaseEntity } from "src/common/baseEntity";
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typeorm";
 import { Ingredient } from "./ingredient.entity";
 import { User } from "./user.entity";
+import { Category } from "./category.entity";
 
 @Entity()
 export class Recipe extends BaseEntity{
@@ -40,4 +41,7 @@ export class Recipe extends BaseEntity{
 
   @Column()
   recipeImageUrl: string
+
+  @ManyToMany(()=>Category , (category)=>category.recipes,{onDelete: 'CASCADE'} )
+  categories: Category[]
 }

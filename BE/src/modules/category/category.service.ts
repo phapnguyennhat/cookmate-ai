@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from 'src/database/entity/category.entity';
-import { QueryRunner, Repository } from 'typeorm';
+import { In, QueryRunner, Repository } from 'typeorm';
 import { CreateCategory, CreateCategoryDto } from './dto/createCategory.dto';
 
 @Injectable()
@@ -18,6 +18,21 @@ export class CategoryService {
   }
 
   async getCategoryList (){
-    return this.categoryRepo.find()
+    return this.categoryRepo.find({relations: {
+      image: true
+    }})
+  }
+
+  async getCategoryListName (){
+     const categories = await this.categoryRepo.find()
+     return categories.map(item=>item.name)
+  }
+
+  async findCategoryByListName (categoryNameList: string[]){
+    return this.categoryRepo.find({
+      where: {
+        name: In(categoryNameList)
+      }
+    })
   }
 }

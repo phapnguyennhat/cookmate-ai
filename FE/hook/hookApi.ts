@@ -1,5 +1,6 @@
 import FullScreenLoader from "@/components/FullScreenLoader"
 import { myApi } from "@/config/myApi"
+import { findRecipe } from "@/lib/api"
 import { setAuth } from "@/lib/features/auth/authSlice"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "expo-router"
@@ -42,6 +43,7 @@ export const useGetCategoryList = () =>{
         },
         queryKey: ['category']
     })
+    
 
     useEffect(()=>{
         if(isError){
@@ -50,5 +52,25 @@ export const useGetCategoryList = () =>{
     },[isError])
 
     return {categories, isLoading}
+}
+
+
+export const useFindRecipe = (queryRecipe: QueryRecipe) =>{
+    const {data, isLoading, isError, error } = useQuery({
+        queryFn: ()=>findRecipe(queryRecipe),
+        queryKey: ['recipe', JSON.stringify(queryRecipe)]
+    })
+    const router =useRouter()
+
+    useEffect(() => {
+        if(isError){
+          if((error as any).response.data.statusCode ==401){
+              router.replace('/landing')
+          }else{
+              Toast.error('Network error')
+          }
+        }
+    }, [isError]);
+    return {recipes: data?.recipes, count: data?.count, isLoading}
 }
 

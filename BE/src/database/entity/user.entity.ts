@@ -1,6 +1,6 @@
 import { Exclude } from "class-transformer";
 import { BaseEntity } from "src/common/baseEntity";
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Check, Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { File } from "./file.entity";
 
 export enum AuthBy {
@@ -11,6 +11,7 @@ export enum AuthBy {
 }
 
 @Entity()
+@Check('credit>=0')
 export   class User extends BaseEntity {
 
   @Column({unique: true, nullable: true})
@@ -22,7 +23,7 @@ export   class User extends BaseEntity {
   @Column()
   name: string
 
-  @Column({type: 'integer', nullable: true})
+  @Column({type: 'integer', default: 0})
   credit: number
 
   @Column({type: 'text', nullable: true})

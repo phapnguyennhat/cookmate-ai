@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthBy, User } from 'src/database/entity/user.entity';
-import { Repository } from 'typeorm';
+import { QueryRunner, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt'
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -24,7 +24,10 @@ export class UserService {
     return this.userRepo.findOneBy({username})
   }
 
-  async update(userId: string, updateUserDto: UpdateUserDto) {
+  async update(userId: string, updateUserDto: UpdateUserDto, queryRunner?:QueryRunner) {
+    if(queryRunner){
+      return queryRunner.manager.update(User, userId, updateUserDto)
+    }
     return this.userRepo.update(userId, updateUserDto)
   }
 

@@ -10,6 +10,7 @@ import { FileModule } from '../file/file.module';
   imports: [CloudinaryModule,FileModule, TypeOrmModule.forFeature([Category])],
   controllers: [CategoryController],
   providers: [CategoryService],
+  exports: [CategoryService]
   
 })
 export class CategoryModule {}

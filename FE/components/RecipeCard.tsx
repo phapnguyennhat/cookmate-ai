@@ -13,14 +13,18 @@ export default function RecipeCard({ recipe }: IProps) {
                 source={{ uri: recipe.recipeImageUrl }}
             />
 
-            {/* <LinearGradient
-                colors={['rgba(0,0,0,0.8)', 'transparent']}
-                className=" bg-black/10 absolute bottom-0 p-[10px]   "
+            <LinearGradient
+                colors={['transparent','rgba(0,0,0,0.8)','rgba(0,0,0,0.8)', 'rgba(0,0,0,0.8)','rgba(0,0,0,0.8)']}
+                className=" absolute bottom-0 p-[10px]  w-full  "
+                style= {{
+                  borderBottomLeftRadius: 20,
+                  borderBottomRightRadius:20
+                }}
             >
                 <View>
-                    <Text className=" text-light">{recipe.recipeName}</Text>
+                    <Text className=" text-light text-base">{recipe.recipeName}</Text>
                 </View>
-            </LinearGradient> */}
+            </LinearGradient>
         </View>
     );
 }

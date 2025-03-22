@@ -11,7 +11,7 @@ export class Category extends BaseEntity {
   @Column()
   imageId: string
 
-  @OneToOne(()=>File)
+  @OneToOne(()=>File, {eager: true})
   @JoinColumn()
   image: File
 

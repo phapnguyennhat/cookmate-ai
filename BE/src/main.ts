@@ -15,7 +15,7 @@ async function bootstrap() {
     new ValidationPipe({
       // forbidNonWhitelisted: true,
       skipMissingProperties: false,
-      forbidUnknownValues: true,
+      forbidUnknownValues: false,
       whitelist: true,
     }),
   );

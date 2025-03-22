@@ -13,6 +13,8 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { FileModule } from './modules/file/file.module';
 import { GoogleAuthModule } from './modules/google-auth/google-auth.module';
 import { CategoryModule } from './modules/category/category.module';
+import { OpenaiModule } from './modules/openai/openai.module';
+import { GuruaiModule } from './modules/guruai/guruai.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { CategoryModule } from './modules/category/category.module';
     FileModule,
     GoogleAuthModule,
     CategoryModule,
+    OpenaiModule,
+    GuruaiModule,
   ],
   controllers: [AppController],
   providers: [

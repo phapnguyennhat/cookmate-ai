@@ -47,5 +47,5 @@ export class Recipe extends BaseEntity{
   categories: Category[]
 
   @OneToMany(()=>UserFavorite, (userFavorite)=>userFavorite.recipe)
-  userFavorite: UserFavorite
+  userFavorites: UserFavorite []
 }

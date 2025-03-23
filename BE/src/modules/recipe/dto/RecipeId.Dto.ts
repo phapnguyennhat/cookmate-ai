@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class CreateFavoriteDto {
+export class RecipeIdDto {
   @IsNotEmpty()
   @IsString()
   recipeId: string
 }
 
-export class CreateFavorite extends CreateFavoriteDto{
+export class UserRecipe extends RecipeIdDto {
   userId: string
 }

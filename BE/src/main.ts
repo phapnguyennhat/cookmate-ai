@@ -20,7 +20,7 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors();
+  // app.enableCors();
 
 
   await app.listen(configService.get('PORT')|| 3000);

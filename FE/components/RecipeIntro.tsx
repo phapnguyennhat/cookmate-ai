@@ -1,10 +1,29 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useEffect, useMemo, useState } from 'react';
+import { useAddFavorite, useDeleteFavorite } from '@/hook/hookAction';
 
 interface IProps {
     recipe?: IRecipe;
 }
 export default function RecipeIntro({ recipe }: IProps) {
+    const [saved, setSaved] = useState(recipe?.userFavorites.length===1)
+    const addFavorite = useAddFavorite(recipe?.id as string)
+    const deleteFavorite = useDeleteFavorite(recipe?.id as string)
+
+
+    useEffect(()=>{
+        const timeOutId =setTimeout(() => {
+            if(saved && recipe?.userFavorites.length ===0 ){
+                addFavorite.mutate()
+            } else if (!saved && recipe?.userFavorites.length===1){
+                deleteFavorite.mutate()
+            }
+        }, 200);
+        return ()=>clearTimeout(timeOutId)
+    },[saved])
+
+
     return (
         <View>
             <Image
@@ -15,8 +34,16 @@ export default function RecipeIntro({ recipe }: IProps) {
                 <Text className=" font-outfit text-[25px] mt-[7px]">
                     {recipe?.recipeName}
                 </Text>
-                <TouchableOpacity>
-                    <Ionicons name="bookmark-outline" size={24} color="black" />
+                <TouchableOpacity onPress={()=>setSaved(!saved)} >
+                    {saved ? (
+                        <Ionicons name="bookmark" size={24} color="black" />
+                    ) : (
+                        <Ionicons
+                            name="bookmark-outline"
+                            size={24}
+                            color="black"
+                        />
+                    )}
                 </TouchableOpacity>
             </View>
 

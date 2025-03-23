@@ -26,6 +26,7 @@ declare global {
     name: string,
     credit: number
     pref: string
+    email: string
     avatar?: IFile
   }
 
@@ -51,6 +52,7 @@ declare global {
     serveTo: number
     imagePrompt: string
     recipeImageUrl:string
+    userFavorites: Object[]
   }
 
   interface Ingredient {
@@ -64,6 +66,6 @@ declare global {
     limit?: number
     categoryName ?:string
     createAt?: 'asc'|'desc'
-    collection?: 'all'|'my-recipe'
+    collection?: 'all'|'my-recipe' | 'my-favorite'
   }
 }

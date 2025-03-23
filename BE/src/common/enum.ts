@@ -6,5 +6,6 @@ export enum EOrder  {
 
 export enum ECollection {
   MYRECIPE= 'my-recipe',
-  ALL = 'all'
+  ALL = 'all',
+  MYFAVORITE = 'my-favorite'
 }

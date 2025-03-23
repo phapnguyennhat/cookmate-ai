@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import JwtAuthGuard from '../auth/guard/jwt-auth.guard';
 import RequestWithUser from 'src/common/requestWithUser.interface';
@@ -12,7 +12,7 @@ import { get_complete_recipe_prompt } from 'src/util/func';
 import { DataSource } from 'typeorm';
 import { UserService } from '../user/user.service';
 import { QueryRecipeDto } from './dto/QueryRecipe.dto';
-import { CreateFavoriteDto } from './dto/CreateFavorite.dto';
+import {  RecipeIdDto } from './dto/RecipeId.Dto';
 
 @Controller('')
 export class RecipeController {
@@ -25,7 +25,7 @@ export class RecipeController {
     private readonly dataSource: DataSource
   ) {}
 
-  @Post()
+  @Post('recipe')
   @UseGuards(JwtAuthGuard)
   async create(
     @Req() req: RequestWithUser,
@@ -105,8 +105,14 @@ export class RecipeController {
 
   @Post('user/recipe/favorite')
   @UseGuards(JwtAuthGuard)
-  async saveFavorite (@Req() req: RequestWithUser, @Body() {recipeId}: CreateFavoriteDto){
+  async saveFavorite (@Req() req: RequestWithUser, @Body() {recipeId}: RecipeIdDto){
     return this.recipeService.saveFavorite({userId: req.user.id, recipeId})
+  }
+
+  @Delete('user/recipe/favorite/:recipeId')
+  @UseGuards(JwtAuthGuard)
+  async deleteFavorite (@Req() req: RequestWithUser, @Param() {recipeId}: RecipeIdDto ) {
+    return this.recipeService.deleteFavorite({recipeId, userId: req.user.id})
   }
 
 }

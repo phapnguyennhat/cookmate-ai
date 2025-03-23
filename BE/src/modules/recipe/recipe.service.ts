@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Recipe } from 'src/database/entity/recipe.entity';
 import { Repository } from 'typeorm';
-import { CreateRecipe } from './dto/createRecipe.dto';
 import { QueryRecipeDto } from './dto/QueryRecipe.dto';
 import { ECollection, EOrder } from 'src/common/enum';
 import { UserFavorite } from 'src/database/entity/user-favorite.entity';
-import { CreateFavorite } from './dto/CreateFavorite.dto';
+import { UserRecipe } from './dto/RecipeId.Dto';
+import { CreateRecipe } from './dto/CreateRecipe.dto';
 
 @Injectable()
 export class RecipeService {
@@ -20,8 +20,12 @@ export class RecipeService {
     return this.recipeRepo.save(createRecipe);
   }
 
-  async saveFavorite(createFavorite: CreateFavorite) {
-    return this.userFavoriteRepo.save(createFavorite);
+  async saveFavorite(userRecipe: UserRecipe) {
+    return this.userFavoriteRepo.save(userRecipe);
+  }
+
+  async deleteFavorite (userRecipe: UserRecipe){
+    return this.userFavoriteRepo.delete(userRecipe)
   }
 
   async findByName(recipeName: string) {
@@ -62,6 +66,8 @@ export class RecipeService {
     if (collection) {
       if (collection === ECollection.MYRECIPE) {
         queryBuilder.andWhere('recipe.userId=:userId', { userId });
+      }else if(collection === ECollection.MYFAVORITE){
+        queryBuilder.innerJoin('recipe.userFavorites', 'userFavorites', 'userFavorites.userId=:userId', {userId})
       }
     }
 
@@ -74,9 +80,9 @@ export class RecipeService {
       .createQueryBuilder('recipe')
       .innerJoin('recipe.ingredients', 'ingredients')
       .leftJoin(
-        'recipe.userFavorite',
-        'userFavorite',
-        'userFavorite.userId=:userId',
+        'recipe.userFavorites',
+        'userFavorites',
+        'userFavorites.userId=:userId',
         { userId },
       )
 
@@ -89,7 +95,7 @@ export class RecipeService {
         'recipe.cookTime',
         'recipe.serveTo',
         'recipe.recipeImageUrl',
-        'userFavorite'
+        'userFavorites'
       ])
       .andWhere('recipe.id =:id', { id });
 

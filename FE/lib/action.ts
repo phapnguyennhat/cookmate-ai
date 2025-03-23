@@ -23,3 +23,14 @@ export const logout = async () =>{
     const response = await myApi.post('auth/logout')
     return response.data
 }
+
+
+export const addFavorite = async (recipeId: string  )=>{
+    const response = await myApi.post('user/recipe/favorite', {recipeId})
+    return response.data
+}
+
+export const deleteFavorite = async (recipeId: string) =>{
+    const response = await myApi.delete(`user/recipe/favorite/${recipeId}`)
+    return response.data
+}

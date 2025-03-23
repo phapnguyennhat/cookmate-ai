@@ -30,7 +30,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
         : null;
     message =
       httpStatus === HttpStatus.INTERNAL_SERVER_ERROR
-        ? ('Lỗi hệ thống')
+        ? ('Server Error, Try later!')
         : message;
 
     const responseBody = {

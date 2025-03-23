@@ -7,18 +7,20 @@ import { QueryRecipeDto } from './dto/QueryRecipe.dto';
 
 @Injectable()
 export class RecipeService {
-  constructor(@InjectRepository(Recipe) private readonly recipeRepo: Repository<Recipe>){}
+  constructor(
+    @InjectRepository(Recipe) private readonly recipeRepo: Repository<Recipe>,
+  ) {}
 
-  async create(createRecipe: CreateRecipe){
-    return this.recipeRepo.save(createRecipe)
+  async create(createRecipe: CreateRecipe) {
+    return this.recipeRepo.save(createRecipe);
   }
 
-  async findByName (recipeName :string){
-    return this.recipeRepo.findOneBy({recipeName})
+  async findByName(recipeName: string) {
+    return this.recipeRepo.findOneBy({ recipeName });
   }
 
-  async findRecipe  (queryRecipeDto :QueryRecipeDto){
-    const {page=1, limit=10, categoryName} = queryRecipeDto
+  async findRecipe(queryRecipeDto: QueryRecipeDto) {
+    const { page = 1, limit = 10, categoryName } = queryRecipeDto;
 
     const queryBuilder = this.recipeRepo
       .createQueryBuilder('recipe')
@@ -26,13 +28,24 @@ export class RecipeService {
       .skip((page - 1) * limit)
       .take(limit);
 
-
-    if(categoryName){
-      queryBuilder.innerJoin('recipe.categories', 'categories')
-      .andWhere('categories.name =:categoryName', {categoryName})
-
+    if (categoryName) {
+      queryBuilder
+        .innerJoin('recipe.categories', 'categories')
+        .andWhere('categories.name =:categoryName', { categoryName });
     }
-    const [recipes, count] = await queryBuilder.getManyAndCount()
-    return {recipes, count}
+    const [recipes, count] = await queryBuilder.getManyAndCount();
+    return { recipes, count };
+  }
+
+  async findById(id: string) {
+    const queryBuilder = this.recipeRepo
+      .createQueryBuilder('recipe')
+      .innerJoin('recipe.ingredients', 'ingredients')
+      .select(['recipe.id', 'recipe.recipeName', 'recipe.description', 'ingredients.ingredient','ingredients.icon', 'ingredients.quantity', 'recipe.steps', 'recipe.calories', 'recipe.cookTime', 'recipe.serveTo', 'recipe.recipeImageUrl'])
+      .andWhere('recipe.id =:id', {id})
+
+      ;
+    
+      return queryBuilder.getOne()
   }
 }

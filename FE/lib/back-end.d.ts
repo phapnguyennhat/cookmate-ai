@@ -41,6 +41,7 @@ declare global {
   }
 
   interface IRecipe {
+    id: string
     recipeName: string
     description: string
     ingredients: Ingredient[]

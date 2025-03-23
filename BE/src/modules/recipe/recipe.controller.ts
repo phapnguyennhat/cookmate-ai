@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import JwtAuthGuard from '../auth/guard/jwt-auth.guard';
 import RequestWithUser from 'src/common/requestWithUser.interface';
@@ -59,8 +59,9 @@ export class RecipeController {
 
         const categories = await this.categoryService.findCategoryByListName(completedRecipe.category)
 
+        console.log(completedRecipe.category)
 
-        await this.recipeService.create({
+        const newRecipe = await this.recipeService.create({
           ...completedRecipe,
           userId: req.user.id,
           recipeImageUrl: url,
@@ -69,7 +70,7 @@ export class RecipeController {
         });
 
         await queryRunner.commitTransaction()
-        return { message: 'Create recipe successfully' };
+        return { id: newRecipe.id };
       } catch (error) {
         await queryRunner.rollbackTransaction()
         throw error
@@ -93,6 +94,12 @@ export class RecipeController {
   async findRecipe (@Query() queryRecipeDto: QueryRecipeDto){
     return this.recipeService.findRecipe(queryRecipeDto)
     
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  async findRecipeById(@Param('id') id: string){
+    return this.recipeService.findById(id)
   }
 
 }

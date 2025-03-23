@@ -6,7 +6,7 @@ import { FlatList, Text, View } from 'react-native';
 
 export default function RecipeCategory() {
     const { categoryName } = useLocalSearchParams();
-    const { recipes, isLoading } = useFindRecipe({
+    const { recipes, isLoading, refetch } = useFindRecipe({
         categoryName: categoryName as string,
     });
     return (
@@ -17,6 +17,10 @@ export default function RecipeCategory() {
             <FlatList
                 data={recipes}
                 numColumns={2}
+                
+                showsVerticalScrollIndicator={false}
+                refreshing={isLoading}
+                onRefresh={()=>refetch()}
                 renderItem={({ item, index }) => <View className=' flex-1'><RecipeCard recipe={item} /></View>}
             />
         </View>

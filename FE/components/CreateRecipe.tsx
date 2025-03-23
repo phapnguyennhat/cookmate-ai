@@ -41,8 +41,6 @@ export default function CreateRecipe() {
 
     const generateCompleteRecipe = async (recipeOption: RecipeOption) => {
         actionSheetRef.current?.hide();
-
-
         try {
             mutation.mutate(recipeOption)
             

@@ -7,6 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import StoreProvider from '@/provider/StoreProvider';
 import { STALETIME } from '@/common/constant';
 import { useFonts } from 'expo-font';
+import Feather from '@expo/vector-icons/Feather';
 
 GoogleSignin.configure({
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
@@ -63,6 +64,13 @@ export default function RootLayout() {
                     <Stack.Screen name='recipe-by-category' options={{
                         headerTransparent: true,
                         headerTitle: ''
+                    }} />
+                     <Stack.Screen name='recipe/recipeDetail' options={{
+                        headerTitle: 'Detail',
+                        headerRight: ()=>(
+                            <Feather name="share" size={24} color="black" />
+                        )
+                         
                     }} />
                 </Stack>
             </StoreProvider>

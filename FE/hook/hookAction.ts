@@ -51,8 +51,12 @@ export const useCreateRecipe = () =>{
         Toast.error(error.response.data.message ||'Failed to create recipe')
       }
     },
-    onSuccess: ()=>{
+    onSuccess: (data)=>{
       queryClient.invalidateQueries({queryKey: ['recipe']})
+      router.push({
+        pathname: '/recipe/recipeDetail',
+        params: {id: data.data.id}
+      })
     }
     
   })

@@ -4,6 +4,7 @@ import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typ
 import { Ingredient } from "./ingredient.entity";
 import { User } from "./user.entity";
 import { Category } from "./category.entity";
+import { UserFavorite } from "./user-favorite.entity";
 
 @Entity()
 export class Recipe extends BaseEntity{
@@ -44,4 +45,7 @@ export class Recipe extends BaseEntity{
 
   @ManyToMany(()=>Category , (category)=>category.recipes,{onDelete: 'CASCADE'} )
   categories: Category[]
+
+  @OneToMany(()=>UserFavorite, (userFavorite)=>userFavorite.recipe)
+  userFavorite: UserFavorite
 }

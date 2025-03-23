@@ -1,9 +1,14 @@
 import { BaseEntity } from "src/common/baseEntity";
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Recipe } from "./recipe.entity";
 
 @Entity()
-export class Ingredient extends BaseEntity{
+export class Ingredient {
+
+  @PrimaryGeneratedColumn('uuid')
+  id: string
+
+
   @Column()
   ingredient: string
 

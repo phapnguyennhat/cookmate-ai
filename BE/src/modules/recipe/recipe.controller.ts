@@ -12,8 +12,9 @@ import { get_complete_recipe_prompt } from 'src/util/func';
 import { DataSource } from 'typeorm';
 import { UserService } from '../user/user.service';
 import { QueryRecipeDto } from './dto/QueryRecipe.dto';
+import { CreateFavoriteDto } from './dto/CreateFavorite.dto';
 
-@Controller('recipe')
+@Controller('')
 export class RecipeController {
   constructor(
     private readonly recipeService: RecipeService,
@@ -80,7 +81,7 @@ export class RecipeController {
 
   }
 
-  @Post('option')
+  @Post('recipe/option')
   @UseGuards(JwtAuthGuard)
   async getRecipeOption(@Body() { prompt }: QueryPromptDto) {
     const result = await this.openaiService.askAI(
@@ -89,17 +90,23 @@ export class RecipeController {
     return JSON.parse(result);
   }
 
-  @Get()
+  @Get('recipe')
   @UseGuards(JwtAuthGuard)
-  async findRecipe (@Query() queryRecipeDto: QueryRecipeDto){
-    return this.recipeService.findRecipe(queryRecipeDto)
+  async findRecipe (@Query() queryRecipeDto: QueryRecipeDto, @Req( )req: RequestWithUser){
+    return this.recipeService.findRecipe(queryRecipeDto, req.user.id)
     
   }
 
-  @Get(':id')
+  @Get('recipe/:id')
   @UseGuards(JwtAuthGuard)
-  async findRecipeById(@Param('id') id: string){
-    return this.recipeService.findById(id)
+  async findRecipeById(@Param('id') id: string, @Req() req: RequestWithUser){
+    return this.recipeService.findById(id, req.user.id)
+  }
+
+  @Post('user/recipe/favorite')
+  @UseGuards(JwtAuthGuard)
+  async saveFavorite (@Req() req: RequestWithUser, @Body() {recipeId}: CreateFavoriteDto){
+    return this.recipeService.saveFavorite({userId: req.user.id, recipeId})
   }
 
 }

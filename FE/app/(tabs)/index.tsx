@@ -2,6 +2,7 @@ import CategoryList from '@/components/CategoryList';
 import CreateRecipe from '@/components/CreateRecipe';
 import FullScreenLoader from '@/components/FullScreenLoader';
 import IntroHeader from '@/components/IntroHeader';
+import LastestRecipe from '@/components/LastestRecipe';
 import { useLogout } from '@/hook/hookAction';
 import { useGetProfile } from '@/hook/hookApi';
 import { Link } from 'expo-router';
@@ -23,6 +24,9 @@ export default function Home() {
                 <CreateRecipe/>
                 {/* Category */}
                 <CategoryList/>
+
+                <LastestRecipe/>
+
 
                 <FullScreenLoader visible={logout.isPending} />
             </ScrollView>

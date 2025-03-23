@@ -63,5 +63,7 @@ declare global {
     page?: number, 
     limit?: number
     categoryName ?:string
+    createAt?: 'asc'|'desc'
+    collection?: 'all'|'my-recipe'
   }
 }

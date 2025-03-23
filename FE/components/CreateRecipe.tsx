@@ -40,10 +40,12 @@ export default function CreateRecipe() {
     };
 
     const generateCompleteRecipe = async (recipeOption: RecipeOption) => {
-        actionSheetRef.current?.hide();
         try {
-            mutation.mutate(recipeOption)
-            
+            mutation.mutate(recipeOption,{
+                onSuccess: ()=>{
+                    actionSheetRef.current?.hide();
+                }
+            })
         } catch (error) {
             console.log(error);
             Toast.error('Response too slow');

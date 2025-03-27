@@ -72,7 +72,7 @@ export class RecipeService {
     }
 
     const [recipes, count] = await queryBuilder.getManyAndCount();
-    return { recipes, count };
+    return { recipes, count, page };
   }
 
   async findById(id: string, userId?: string) {

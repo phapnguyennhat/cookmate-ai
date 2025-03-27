@@ -7,3 +7,22 @@ export const get_complete_recipe_prompt = (categoryListString: string[])=>{
   - Give me category List for recipe from ${JSON.stringify(categoryListString)} as category
   - Give me response in JSON format only`
 } 
+
+export function extractBrackets(str: string): string | null {
+  let start = str.indexOf('[');
+  let end = str.lastIndexOf(']');
+
+  if (start !== -1 && end !== -1) {
+    return str.substring(start, end + 1);
+  }
+  return null;
+}
+
+export function extractBraces(str: string) {
+  let start = str.indexOf('{');
+  let end = str.lastIndexOf('}');
+  if (start !== -1 && end !== -1) {
+    return str.substring(start, end + 1);
+  }
+  return null;
+}

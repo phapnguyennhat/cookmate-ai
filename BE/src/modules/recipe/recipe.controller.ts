@@ -8,7 +8,7 @@ import { OpenaiService } from '../openai/openai.service';
 import {  GENERATE_RECIPE_OPTION_PROMPT } from 'src/common/constant';
 import { QueryPromptDto } from '../openai/dto/QueryPrompt.dto';
 import { CategoryService } from '../category/category.service';
-import { get_complete_recipe_prompt } from 'src/util/func';
+import { extractBraces, extractBrackets, get_complete_recipe_prompt } from 'src/util/func';
 import { DataSource } from 'typeorm';
 import { UserService } from '../user/user.service';
 import { QueryRecipeDto } from './dto/QueryRecipe.dto';
@@ -53,7 +53,10 @@ export class RecipeController {
         await this.userService.update(req.user.id, {credit: req.user.credit-1})
         
         const result = await this.openaiService.askAI(prompt);
-        const completedRecipe = JSON.parse(result);
+        const formatResponse = extractBraces(result)
+        console.log({ result })
+        console.log({formatResponse})
+        const completedRecipe = JSON.parse(formatResponse);
         const { url } = await this.guruaiService.generateImage(
           completedRecipe.imagePrompt,
         );
@@ -84,10 +87,15 @@ export class RecipeController {
   @Post('recipe/option')
   @UseGuards(JwtAuthGuard)
   async getRecipeOption(@Body() { prompt }: QueryPromptDto) {
+   
     const result = await this.openaiService.askAI(
       prompt + GENERATE_RECIPE_OPTION_PROMPT,
     );
-    return JSON.parse(result);
+    console.log({result})
+    const formatResponse = extractBrackets(result)
+    console.log({formatResponse})
+    const jsonResponse = JSON.parse(formatResponse)
+    return jsonResponse
   }
 
   @Get('recipe')

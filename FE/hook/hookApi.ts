@@ -71,7 +71,7 @@ export const useFindRecipe = (queryRecipe: QueryRecipe) =>{
           }
         }
     }, [isError]);
-    return {recipes: data?.recipes, count: data?.count, isLoading, refetch}
+    return {recipes: data?.recipes, count: data?.count,page: data?.page, isLoading, refetch}
 }
 
 export const useFindRecipeById = (id: string)=>{

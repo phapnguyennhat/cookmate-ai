@@ -71,6 +71,9 @@ export class RecipeService {
       }
     }
 
+    
+
+
     const [recipes, count] = await queryBuilder.getManyAndCount();
     return { recipes, count, page };
   }
@@ -89,8 +92,10 @@ export class RecipeService {
       .select([
         'recipe.id',
         'recipe.recipeName',
+        'recipe.description',
         'ingredients',
         'recipe.steps',
+        'recipe.userId',
         'recipe.calories',
         'recipe.cookTime',
         'recipe.serveTo',
@@ -100,5 +105,13 @@ export class RecipeService {
       .andWhere('recipe.id =:id', { id });
 
     return queryBuilder.getOne();
+  }
+  
+  async findRecipeByIdAndUserId(id: string, userId: string) {
+    return this.recipeRepo.findOneBy({id, userId})
+  }
+
+  async delete(id: string) {
+    return this.recipeRepo.delete(id)
   }
 }

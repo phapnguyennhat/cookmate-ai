@@ -1,5 +1,6 @@
-import { login, loginGoogle, logout } from '@/api/auth';
+import { login, loginGoogle, logout, register } from '@/api/auth';
 import { setAuth } from '@/lib/features/auth/authSlice';
+import { useRoute } from '@react-navigation/native';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useDispatch } from 'react-redux';
@@ -43,5 +44,13 @@ export const useLogout = () => {
 	});
 	return mutation;
 };
+
+export const useRegister = () => {
+	const mutation = useMutation({
+		mutationFn: register,
+
+	})
+	return mutation
+}
 
 

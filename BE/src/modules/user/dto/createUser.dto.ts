@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Min, MinLength } from "class-validator";
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -16,15 +16,18 @@ export class CreateUserDto {
 
   @IsNumber()
   @Type(()=>Number)
-  @IsNotEmpty()
+  @IsOptional()
   credit: number
 
   @IsNotEmpty()
   @IsString()
+  @MinLength(8, {
+    message: 'Password must be at least 8 characters long',
+  })
   password: string
 
   @IsNotEmpty()
-  @IsString()
+  @IsOptional()
   pref: string
 
 

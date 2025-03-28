@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, ForbiddenException, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import JwtAuthGuard from '../auth/guard/jwt-auth.guard';
 import RequestWithUser from 'src/common/requestWithUser.interface';
@@ -54,8 +54,7 @@ export class RecipeController {
         
         const result = await this.openaiService.askAI(prompt);
         const formatResponse = extractBraces(result)
-        console.log({ result })
-        console.log({formatResponse})
+      
         const completedRecipe = JSON.parse(formatResponse);
         const { url } = await this.guruaiService.generateImage(
           completedRecipe.imagePrompt,
@@ -63,7 +62,6 @@ export class RecipeController {
 
         const categories = await this.categoryService.findCategoryByListName(completedRecipe.category)
 
-        console.log(completedRecipe.category)
 
         const newRecipe = await this.recipeService.create({
           ...completedRecipe,
@@ -91,9 +89,7 @@ export class RecipeController {
     const result = await this.openaiService.askAI(
       prompt + GENERATE_RECIPE_OPTION_PROMPT,
     );
-    console.log({result})
     const formatResponse = extractBrackets(result)
-    console.log({formatResponse})
     const jsonResponse = JSON.parse(formatResponse)
     return jsonResponse
   }
@@ -123,4 +119,13 @@ export class RecipeController {
     return this.recipeService.deleteFavorite({recipeId, userId: req.user.id})
   }
 
+  @Delete('user/recipe/:id')
+  @UseGuards(JwtAuthGuard)
+  async deleteRecipe(@Req() req: RequestWithUser, @Param('id') id: string) {
+    const recipe = await this.recipeService.findRecipeByIdAndUserId(id, req.user.id)
+    if (!recipe) {
+      throw new ForbiddenException('Not Allow')
+    }
+    return this.recipeService.delete(id)
+  }
 }

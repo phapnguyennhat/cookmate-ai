@@ -1,5 +1,5 @@
 import { myAPiConfig } from '@/api/myApiConfig';
-import { addFavorite, deleteFavorite, findRecipe } from '@/api/recipe';
+import { addFavorite, deleteFavorite, deleteRecipe, findRecipe } from '@/api/recipe';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
@@ -132,3 +132,12 @@ export const useDeleteFavorite = (recipeId: string) => {
 
 	return mutation;
 };
+
+
+export const useDeleteRecipe = () => {
+	const mutation = useMutation({
+		mutationFn: deleteRecipe,
+		
+	})
+	return mutation
+}

@@ -12,7 +12,7 @@ export default function RecipeSteps({ steps }: IProps) {
                 scrollEnabled={false}
                 data={steps}
                 renderItem={({ item, index }) => (
-                    <View className=" flex-row gap-[7px] items-center mt-[10px] p-[10px] border-[0.3px]  rounded-[15px] ">
+                    <View className=" mb-1 flex-row gap-[7px] items-center mt-[10px] p-[10px] border-[0.3px]  rounded-[15px] ">
                         <Text className="p-[10px] w-[40px] bg-secondary font-outfit text-center rounded-[7px] text-lg ">
                             {index + 1}
                         </Text>

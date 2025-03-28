@@ -23,6 +23,7 @@ declare global {
   }
 
   interface IUser {
+    id: string
     name: string,
     credit: number
     pref: string
@@ -53,6 +54,7 @@ declare global {
     imagePrompt: string
     recipeImageUrl:string
     userFavorites: Object[]
+    userId: string
   }
 
   interface Ingredient {

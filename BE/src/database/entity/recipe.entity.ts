@@ -37,7 +37,7 @@ export class Recipe extends BaseEntity{
   @Column()
   userId: string
 
-  @ManyToOne(()=>User)
+  @ManyToOne(()=>User, {onDelete: 'SET NULL'})
   user: User
 
   @Column()

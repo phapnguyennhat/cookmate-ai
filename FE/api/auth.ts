@@ -1,4 +1,5 @@
-import { LoginForm } from '@/lib/schema';
+
+import { LoginForm, RegisterForm } from '@/schema/auth';
 import { myAPiConfig } from './myApiConfig';
 
 export const login = async (loginData: LoginForm) => {
@@ -20,6 +21,12 @@ export const logout = async () => {
 	const response = await myAPiConfig.post('auth/logout');
 	return response.data;
 };
+
+
+export const register = async (data: RegisterForm) => {
+    const response = await myAPiConfig.post('auth/register', data)
+    return response.data
+}
 
 
 

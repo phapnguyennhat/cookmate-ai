@@ -32,3 +32,8 @@ export const deleteFavorite = async (recipeId: string) => {
 	);
 	return response.data;
 };
+
+export const deleteRecipe = async (id: string) => {
+	const response = await myAPiConfig.delete(`user/recipe/${id}`)
+	return response.data
+}

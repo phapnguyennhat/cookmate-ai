@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginForm, loginSchema } from '@/lib/schema';
 import {
 	GoogleSignin,
 	isErrorWithCode,
@@ -13,6 +12,9 @@ import { Toast } from 'toastify-react-native';
 import FullScreenLoader from '@/components/FullScreenLoader';
 import { useRouter } from 'expo-router';
 import { useLogin, useLoginGoogle } from '@/hook/auth';
+import { LoginForm, loginSchema } from '@/schema/auth';
+import { hide } from 'expo-splash-screen';
+import Feather from '@expo/vector-icons/Feather';
 
 
 export default function Login() {
@@ -29,6 +31,7 @@ export default function Login() {
 	const login = useLogin();
 	const loginGoogle = useLoginGoogle();
 	const router = useRouter();
+	const [hidePassword, setHidePassword] = useState(true)
 
 	const handleLogin = async (data: LoginForm) => {
 		login.mutate(data, {
@@ -91,14 +94,23 @@ export default function Login() {
 				</Text>
 			)}
 
-			<View className=" w-[80%] py-3 rounded-lg border border-gray-300">
+			<View className=" w-[80%] flex-row p-3 rounded-lg border border-gray-300">
 				<TextInput
-					className=" px-3 text-base "
+					className=" flex-1  text-base "
 					placeholder="Password"
-					secureTextEntry
+					secureTextEntry={hidePassword}
 					onChangeText={(text) => setValue('password', text)}
 					{...register('password')}
 				/>
+				<TouchableOpacity
+					onPress={() => setHidePassword(!hidePassword)}
+				>
+					<Feather
+						name={hidePassword ? 'eye-off' : 'eye'}
+						size={24}
+						color="black"
+					/>
+				</TouchableOpacity>
 			</View>
 			{errors.password && (
 				<Text className=" w-[80%] text-left text-red-500">
@@ -127,12 +139,14 @@ export default function Login() {
 						uri: 'https://icon2.cleanpng.com/20240216/fty/transparent-google-logo-flat-google-logo-with-blue-green-red-1710875585155.webp',
 					}}
 				/>
-			</TouchableOpacity >
-			<View className='  flex-row justify-center gap-1'  >
-                <Text className=' text-lg' >New to Cookmate-AI?</Text>
-                <TouchableOpacity onPress={()=>router.replace('/(auth)/register')} >
-                    <Text className=' text-lg text-primary' >Register</Text>
-                </TouchableOpacity>
+			</TouchableOpacity>
+			<View className="  flex-row justify-center gap-1">
+				<Text className=" text-lg">New to Cookmate-AI?</Text>
+				<TouchableOpacity
+					onPress={() => router.replace('/(auth)/register')}
+				>
+					<Text className=" text-lg text-primary">Register</Text>
+				</TouchableOpacity>
 			</View>
 
 			<FullScreenLoader

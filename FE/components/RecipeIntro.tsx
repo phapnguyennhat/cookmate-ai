@@ -11,6 +11,12 @@ export default function RecipeIntro({ recipe }: IProps) {
     const addFavorite = useAddFavorite(recipe?.id as string)
     const deleteFavorite = useDeleteFavorite(recipe?.id as string)
 
+    useEffect(() => {
+        if (recipe) {
+            setSaved(recipe.userFavorites.length===1)
+        }
+    },[recipe?.userFavorites.length])
+
 
     useEffect(()=>{
         const timeOutId =setTimeout(() => {

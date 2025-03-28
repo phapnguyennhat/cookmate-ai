@@ -1,5 +1,5 @@
 import RecipeCard from '@/components/RecipeCard';
-import { useFindRecipe } from '@/hook/hookApi';
+import { useFindRecipe } from '@/hook/recipe';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';

@@ -1,7 +1,7 @@
-import { useFindRecipe } from '@/hook/hookApi'
 import React from 'react'
 import { FlatList, Text, View } from 'react-native'
 import RecipeCardHome from './RecipeCardHome'
+import { useFindRecipe } from '@/hook/recipe'
 
 export default function LastestRecipe() {
   const {recipes, isLoading, refetch} = useFindRecipe({createAt: 'desc'})

@@ -1,11 +1,12 @@
 import { DEFAULT_AVT } from '@/common/constant';
 import FullScreenLoader from '@/components/FullScreenLoader';
-import { useLogout } from '@/hook/hookAction';
-import { useGetProfile } from '@/hook/hookApi';
+
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useGetProfile } from '@/hook/user';
+import { useLogout } from '@/hook/auth';
 
 export default function Profile() {
     const options = [

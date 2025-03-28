@@ -1,5 +1,5 @@
 import RecipeCard from '@/components/RecipeCard';
-import { useFindRecipe } from '@/hook/hookApi';
+import { useFindRecipe } from '@/hook/recipe';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';

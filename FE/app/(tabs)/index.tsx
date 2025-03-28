@@ -3,8 +3,8 @@ import CreateRecipe from '@/components/CreateRecipe';
 import FullScreenLoader from '@/components/FullScreenLoader';
 import IntroHeader from '@/components/IntroHeader';
 import LastestRecipe from '@/components/LastestRecipe';
-import { useLogout } from '@/hook/hookAction';
-import { useGetProfile } from '@/hook/hookApi';
+import { useLogout } from '@/hook/auth';
+
 import { Link } from 'expo-router';
 
 import { ScrollView, View } from 'react-native';

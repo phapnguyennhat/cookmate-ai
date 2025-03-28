@@ -1,5 +1,5 @@
 import RecipeCard from '@/components/RecipeCard';
-import { useFindRecipe } from '@/hook/hookApi';
+import { useFindRecipe } from '@/hook/recipe';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 

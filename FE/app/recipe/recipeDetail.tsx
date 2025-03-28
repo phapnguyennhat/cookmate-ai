@@ -2,7 +2,7 @@ import CreateRecipe from '@/components/CreateRecipe';
 import Ingredients from '@/components/Ingredients';
 import RecipeIntro from '@/components/RecipeIntro';
 import RecipeSteps from '@/components/RecipeSteps';
-import { useFindRecipeById } from '@/hook/hookApi';
+import { useFindRecipeById } from '@/hook/recipe';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { FlatList, Image, ScrollView, Text, View } from 'react-native';

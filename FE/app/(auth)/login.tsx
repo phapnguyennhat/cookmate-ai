@@ -9,10 +9,10 @@ import {
 	isSuccessResponse,
 	statusCodes,
 } from '@react-native-google-signin/google-signin';
-import { useLogin, useLoginGoogle } from '@/hook/hookAction';
 import { Toast } from 'toastify-react-native';
 import FullScreenLoader from '@/components/FullScreenLoader';
 import { useRouter } from 'expo-router';
+import { useLogin, useLoginGoogle } from '@/hook/auth';
 
 
 export default function Login() {

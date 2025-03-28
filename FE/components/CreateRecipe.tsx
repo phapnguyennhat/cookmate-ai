@@ -8,12 +8,11 @@ import {
     View,
 } from 'react-native';
 import Button from './Button';
-import { myApi } from '@/config/myApi';
-import {  getRecipeOptions } from '@/lib/api';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import FullScreenLoader from './FullScreenLoader';
 import { Toast } from 'toastify-react-native';
-import { useCreateRecipe } from '@/hook/hookAction';
+import { useCreateRecipe } from '@/hook/recipe';
+import { getRecipeOptions } from '@/api/recipe';
 
 export default function CreateRecipe() {
     const [userInput, setUserInput] = useState('');

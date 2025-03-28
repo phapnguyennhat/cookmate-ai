@@ -1,5 +1,5 @@
 import { DEFAULT_AVT } from '@/common/constant';
-import { useGetProfile } from '@/hook/hookApi';
+import { useGetProfile } from '@/hook/user';
 import React, { useState } from 'react';
 import { Image, Switch, Text, View } from 'react-native';
 

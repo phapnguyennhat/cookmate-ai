@@ -1,4 +1,4 @@
-import { useGetCategoryList } from '@/hook/hookApi';
+import { useGetCategoryList } from '@/hook/category';
 import { useRouter } from 'expo-router';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 

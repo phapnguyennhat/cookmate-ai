@@ -1,64 +1,16 @@
-import { myApi } from '@/config/myApi';
-import {
-	addFavorite,
-	deleteFavorite,
-	login,
-	loginGoogle,
-	logout,
-} from '@/lib/action';
-import { setAuth } from '@/lib/features/auth/authSlice';
-import { CreateRecipeForm } from '@/lib/schema';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { myAPiConfig } from '@/api/myApiConfig';
+import { addFavorite, deleteFavorite, findRecipe } from '@/api/recipe';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { Toast } from 'toastify-react-native';
-
-export const useLogin = () => {
-	const queryClient = useQueryClient();
-	const mutation = useMutation({
-		mutationFn: login,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['profile'] });
-			queryClient.invalidateQueries({ queryKey: ['recipe'] });
-			queryClient.invalidateQueries({ queryKey: ['recipeDetail'] });
-		},
-	});
-	return mutation;
-};
-
-export const useLoginGoogle = () => {
-	const queryClient = useQueryClient();
-	const mutation = useMutation({
-		mutationFn: loginGoogle,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['profile'] });
-			queryClient.invalidateQueries({ queryKey: ['recipe'] });
-			queryClient.invalidateQueries({ queryKey: ['recipeDetail'] });
-		},
-	});
-
-	return mutation;
-};
-
-export const useLogout = () => {
-  const router = useRouter();
-	const dispatch = useDispatch();
-	const mutation = useMutation({
-		mutationFn: logout,
-		onSuccess: () => {
-			dispatch(setAuth(false));
-      router.replace('/landing');
-		},
-	});
-	return mutation;
-};
 
 export const useCreateRecipe = () => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const mutation = useMutation({
 		mutationFn: (recipeOption: RecipeOption) => {
-			return myApi.post<IRecipe>('recipe', recipeOption);
+			return myAPiConfig.post<IRecipe>('recipe', recipeOption);
 		},
 
 		onError: (error: any) => {
@@ -102,6 +54,60 @@ export const useAddFavorite = (recipeId: string) => {
 	});
 	return mutation;
 };
+
+export const useFindRecipe = (queryRecipe: QueryRecipe) => {
+	const { data, isLoading, isError, error, refetch } = useQuery({
+		queryFn: () => findRecipe(queryRecipe),
+		queryKey: ['recipe', JSON.stringify(queryRecipe)],
+	});
+	const router = useRouter();
+
+	useEffect(() => {
+		if (isError) {
+			if ((error as any).response.data.statusCode == 401) {
+				router.replace('/landing');
+			} else {
+				Toast.error('Network error');
+			}
+		}
+	}, [isError]);
+	return {
+		recipes: data?.recipes,
+		count: data?.count,
+		page: data?.page,
+		isLoading,
+		refetch,
+	};
+};
+
+export const useFindRecipeById = (id: string) => {
+	const {
+		data: recipe,
+		isLoading,
+		isError,
+		error,
+	} = useQuery({
+		queryFn: async () => {
+			const response = await myAPiConfig.get<IRecipe>(`recipe/${id}`);
+			return response.data;
+		},
+		queryKey: ['recipeDetail', id],
+	});
+	const router = useRouter();
+	useEffect(() => {
+		if (isError) {
+			if ((error as any).response.data.statusCode === 401) {
+				router.replace('/landing');
+			} else {
+				Toast.error(
+					(error as any).response.data.message || 'Server Error',
+				);
+			}
+		}
+	}, [isError]);
+	return { recipe, isLoading };
+};
+
 
 export const useDeleteFavorite = (recipeId: string) => {
 	const queryClient = useQueryClient();

@@ -1,7 +1,7 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useMemo, useState } from 'react';
-import { useAddFavorite, useDeleteFavorite } from '@/hook/hookAction';
+import { useAddFavorite, useDeleteFavorite } from '@/hook/recipe';
 
 interface IProps {
     recipe?: IRecipe;

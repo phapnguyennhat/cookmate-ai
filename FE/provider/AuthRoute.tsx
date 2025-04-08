@@ -1,6 +1,6 @@
 import FullScreenLoader from "@/components/FullScreenLoader"
 import { RootState } from "@/lib/store"
-import { isLogin } from "@/lib/util"
+
 import { useMutation } from "@tanstack/react-query"
 import { usePathname, useRouter } from "expo-router"
 import { useEffect, useState } from "react"

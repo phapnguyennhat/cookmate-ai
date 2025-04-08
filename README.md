@@ -21,6 +21,36 @@ Một ứng dụng mobile full-stack được phát triển bằng React Native 
 - TypeORM, JWT, GoogleOAuth, 
 - AI model: OpenRouter (Deepseek), Guru (để tạo hình ảnh)
 
+ [Tải xuống postman folder](postman/postman)
+
+### Modules
+- Auth
+- User
+- File
+- Category
+- Open Ai
+- Guru
+- Recipe
+
+### ScreenShot
+#### 1. Đăng nhập
+![login](image/login.jpg)
+#### 2. Đăng kí
+![register](image/register.jpg)
+
+#### 3. Home
+![home](image/home.jpg)
+
+#### 4. Explore
+![explore](image/explore.jpg)
+
+#### 5. Cook Book
+![cookbook](image/cookbook.jpg)
+
+#### 6. Chi tiết công thức
+![detail](image/detail.jpg)
+
+
 
 ## ⚙️ Cài đặt
 

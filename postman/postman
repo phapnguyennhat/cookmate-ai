@@ -1,0 +1,546 @@
+{
+	"info": {
+		"_postman_id": "ee037f4c-ab0f-4f4e-bf72-e5d3c913f152",
+		"name": "COOKMATE-AI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36147777"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"phap2\",\r\n    \"name\": \"phap nguyen\",\r\n    \"password\": \"12345678\",\r\n    \"email\": \"phap2@gmail.com\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"account\": \"phap123\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/auth/refresh",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/auth/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Google login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idToken\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/google-auth",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"google-auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/profile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/nguye/OneDrive/Hình ảnh/Saved Pictures/yum of pitch/step1.webp"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/file",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/file/00812469-a2a8-4f5c-afbd-3c2f79a632d0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"file",
+								"00812469-a2a8-4f5c-afbd-3c2f79a632d0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/nguye/OneDrive/Hình ảnh/Saved Pictures/Cookmate-ai/category/salad.png"
+								},
+								{
+									"key": "name",
+									"value": "Salad",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/category",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get category list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/category",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Open Ai",
+			"item": [
+				{
+					"name": "get recipe option",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prompt\": \"potato for breakfast\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/openai/recipe-option?prompt=potato for breakfast",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"openai",
+								"recipe-option"
+							],
+							"query": [
+								{
+									"key": "prompt",
+									"value": "potato for breakfast"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "complete-recipe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"recipeName\": \"Spicy Potato Hash 🥔🌶️\",\r\n    \"description\": \"A fiery and flavorful breakfast hash with crispy potatoes and a kick of spice. Perfect for those who like a little heat to start their day.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/openai/complete-recipe",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"openai",
+								"complete-recipe"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Guru ai",
+			"item": [
+				{
+					"name": "gen image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prompt\": \"Close-up, top-down shot of golden-brown roasted breakfast potatoes on a baking sheet, garnished with a sprinkle of fresh herbs, soft natural lighting\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/guruai/gen-image",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"guruai",
+								"gen-image"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recipe",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipeName\": \"Spicy Potato Hash 🥔🌶️\",\r\n    \"description\": \"A fiery and flavorful breakfast hash with crispy potatoes and a kick of spice. Perfect for those who like a little heat to start their day.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/recipe",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipe?page=1&limit=10&collection=my-favorite",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipe"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "collection",
+									"value": "my-favorite"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recipe option",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prompt\": \"Onion\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/recipe/option",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipe",
+								"option"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipe/9a84e3b7-b5c3-4918-8d80-dfa6c3f9e0ef",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipe",
+								"9a84e3b7-b5c3-4918-8d80-dfa6c3f9e0ef"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save favorite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipeId\": \"9a84e3b7-b5c3-4918-8d80-dfa6c3f9e0ef\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/recipe/favorite",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"recipe",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Favorite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/recipe/favorite/9a84e3b7-b5c3-4918-8d80-dfa6c3f9e0ef",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"recipe",
+								"favorite",
+								"9a84e3b7-b5c3-4918-8d80-dfa6c3f9e0ef"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/recipe/7546a36f-b16f-4b3b-babb-6090bfa04604",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"recipe",
+								"7546a36f-b16f-4b3b-babb-6090bfa04604"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

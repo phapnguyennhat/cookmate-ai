@@ -1,4 +1,4 @@
-# 📱 [Tên Dự Án Mobile App]
+# 📱 Cookmate - AI
 
 Một ứng dụng mobile full-stack được phát triển bằng React Native với backend sử dụng Node.js/Nestjs.  
 Ứng dụng cung cấp tính năng tạo công thức nấu ăn với AI, tìm kiếm công thức, lưu công thức và xác thực người dùng.
